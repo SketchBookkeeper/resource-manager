@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <nav class="level">
+    <nav class="section level">
       <div class="level-left">
         <div class="level-item">
           <div class="field has-addons">
@@ -25,8 +25,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .navbar {
-    padding: 20px 10px;
-  }
 
 </style>
