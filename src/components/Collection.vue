@@ -1,32 +1,50 @@
 <template>
-  <div class="section collection">
-    <AddResource />
+  <div>
+    <div class="section collection">
+      <button @click="showModal" class="add-resource">
+        <i class="material-icons large">add_circle_outline</i>
+      </button>
 
-    <Tile title="one" url="https://www.google.com">
-      Hello
-    </Tile>
+      <Tile title="one" url="https://www.google.com">
+        Hello
+      </Tile>
 
-    <Tile title="two" url="https://www.google.com">
-      Hello
-    </Tile>
+      <Tile title="two" url="https://www.google.com">
+        Hello
+      </Tile>
 
-    <Tile title="three" url="https://www.google.com">
+      <Tile title="three" url="https://www.google.com">
+        Hello
+      </Tile>
+   </div>
+
+    <Modal title="Add Resource" v-show="isAddModalVisible" @close="closeModal">
       Hello
-    </Tile>
+    </Modal>
   </div>
 </template>
 
 <script>
 import {Swappable, Plugins} from '@shopify/draggable'
 import Tile from './Tile'
-import AddResource from './Add-resource'
+import Modal from './Modal'
 export default {
   components: {
     Tile,
-    AddResource
+    Modal
+  },
+  data () {
+    return {
+      isAddModalVisible: false
+    }
   },
   methods: {
-
+    showModal () {
+      this.isAddModalVisible = true
+    },
+    closeModal () {
+      this.isAddModalVisible = false
+    }
   },
   mounted () {
     // eslint-disable-next-line
@@ -51,5 +69,11 @@ export default {
     grid-gap: 20px;
     padding-top: 1px;
     max-width: 100vw;
+  }
+
+  .add-resource {
+    border: 1px dashed #333;
+    border-radius: 5px;
+    cursor: pointer;
   }
 </style>

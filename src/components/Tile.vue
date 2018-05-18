@@ -46,9 +46,9 @@ export default {
       #{ $self }-header,
       #{ $self }-content,
       #{ $self }-footer {
-        display: none;
-      }
+      display: none;
     }
+  }
 
     &-mirror {
       background-color: beige;
