@@ -8,50 +8,6 @@
       <Tile title="one" url="https://www.google.com">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore omnis impedit saepe alias delectus? Assumenda tenetur architecto molestias temporibus sapiente error, velit cumque, dolore ipsum harum ratione, consequatur repellendus dolorem.
       </Tile>
-
-      <Tile title="two" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="three" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="one" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="two" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="three" url="https://www.google.com">
-        Hello
-      </Tile>
-
-        <Tile title="one" url="https://www.google.com">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore omnis impedit saepe alias delectus? Assumenda tenetur architecto molestias temporibus sapiente error, velit cumque, dolore ipsum harum ratione, consequatur repellendus dolorem.
-      </Tile>
-
-      <Tile title="two" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="three" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="one" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="two" url="https://www.google.com">
-        Hello
-      </Tile>
-
-      <Tile title="three" url="https://www.google.com">
-        Hello
-      </Tile>
    </div>
 
     <Modal title="Add Resource" v-show="isAddModalVisible" @close="closeModal">
@@ -61,6 +17,7 @@
 </template>
 
 <script>
+import db from './../firebaseinit'
 import Packery from 'packery'
 import Draggabilly from 'draggabilly'
 import Tile from './Tile'
@@ -74,7 +31,8 @@ export default {
   },
   data () {
     return {
-      isAddModalVisible: false
+      isAddModalVisible: false,
+      resourceItems: []
     }
   },
   methods: {
@@ -84,6 +42,14 @@ export default {
     closeModal () {
       this.isAddModalVisible = false
     }
+  },
+  created () {
+    db.collection('resources')
+      .orderBy('order')
+      .get()
+      .then(resources => {
+
+      })
   },
   mounted () {
     // eslint-disable-next-line
@@ -109,7 +75,6 @@ export default {
     })
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
