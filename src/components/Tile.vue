@@ -1,5 +1,5 @@
 <template>
-  <div class="card draggable" title="click to drag">
+  <div class="card draggable" @click="log">
     <div class="card-header">
       <p class="card-header-title">{{ title }}</p>
     </div>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-footer">
-      <a :href="url" target="_blank" rel="noopener" class="card-footer-item">View</a>
+      <a :href="url" target="_blank" class="card-footer-item view">View</a>
     </div>
   </div>
 </template>
@@ -36,6 +36,13 @@ export default {
   $self: &;
 
   border-radius: 5px;
+
+  &-footer {
+    a.view {
+      position: relative;
+      z-index: 5;
+    }
+  }
 
   &.draggable {
     &-source--is-dragging {

@@ -19,7 +19,7 @@
    </div>
 
     <Modal title="Add Resource" v-show="isAddModalVisible" @close="closeModal">
-      Hello
+      <Add />
     </Modal>
   </div>
 </template>
@@ -28,10 +28,12 @@
 import {Swappable, Plugins} from '@shopify/draggable'
 import Tile from './Tile'
 import Modal from './Modal'
+import Add from './Add'
 export default {
   components: {
     Tile,
-    Modal
+    Modal,
+    Add
   },
   data () {
     return {
