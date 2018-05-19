@@ -1,5 +1,5 @@
 <template>
-  <div class="card draggable" @click="log">
+  <div class="card js-grid-item js-grid-item-draggable">
     <div class="card-header">
       <p class="card-header-title">{{ title }}</p>
     </div>
@@ -32,35 +32,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card {
-  $self: &;
+  .card {
+    width: 200px;
+    float: left;
 
-  border-radius: 5px;
-
-  &-footer {
-    a.view {
-      position: relative;
-      z-index: 5;
+    &.is-dragging {
+      background-color: aquamarine;
+      z-index: 300;
     }
   }
-
-  &.draggable {
-    &-source--is-dragging {
-      border: 1px dashed #333333;
-      box-shadow: 0;
-      color: transparent;
-
-      #{ $self }-header,
-      #{ $self }-content,
-      #{ $self }-footer {
-      display: none;
-    }
-  }
-
-    &-mirror {
-      background-color: beige;
-      z-index: 100;
-    }
-  }
-}
 </style>

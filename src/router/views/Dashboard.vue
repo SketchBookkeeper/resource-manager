@@ -1,7 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <Collection />
+    <div class="section">
+      <Collection />
+    </div>
   </div>
 </template>
 
