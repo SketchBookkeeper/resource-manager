@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import db from './../firebaseinit'
 import Packery from 'packery'
 import Draggabilly from 'draggabilly'
@@ -27,7 +28,7 @@ export default {
       resourceCollection: null
     }
   },
-  computed: {
+  watch: {
 
   },
   methods: {
@@ -48,30 +49,38 @@ export default {
       })
 
       this.pckry.on('dragItemPositioned', () => {
-        // Update items' order in data()
-        this.pckry
-          .getItemElements()
-          .forEach((item, index) => {
-            const itemId = item.id
-            const itemDataIndex = this.resourceItems.findIndex(element => {
-              return item.id === element.id
-            })
-
-            this.resourceItems[itemDataIndex].order = index
-          })
-
         setTimeout(() => {
           this.pckry.layout()
-        }, 20)
+        }, 30)
+
+        this.debouncedUpdateResourceOrder()
       })
+    },
+    updateResourceOrder () {
+      this.pckry
+        .getItemElements()
+        .forEach((item, index) => {
+          db.collection('resources')
+            .doc(item.id)
+            .update({
+              'order': index
+            })
+            .then(() => {
+              console.log('Updated', item.id)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        })
     }
   },
   created () {
+    // Setup realtime database
     this.resourceCollection = db
       .collection('resources')
       .orderBy('order')
       .onSnapshot(resources => {
-        this.resourceItems = []
+        this.resourceItems = [] // review this
         resources
           .forEach(resource => {
             let resourceItem
@@ -80,8 +89,11 @@ export default {
             this.resourceItems.push(resourceItem)
           })
       })
+
+    this.debouncedUpdateResourceOrder = _.debounce(this.updateResourceOrder, 3000)
   },
   updated () {
+    // Destory old packery instance if set
     if (this.pckry !== null) {
       this.pckry.destroy()
     }

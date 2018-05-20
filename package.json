@@ -17,6 +17,7 @@
     "bulma": "^0.7.1",
     "draggabilly": "^2.2.0",
     "firebase": "^5.0.2",
+    "lodash": "^4.17.10",
     "packery": "^2.1.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
