@@ -2,7 +2,7 @@
   <div class="collection">
     <!-- <AddButton /> -->
 
-    <Tile v-for="resource in resourceItems" :key="resource.order" :title="resource.title" :url="resource.url">
+    <Tile v-for="resource in resourceItems" :key="resource.id" :title="resource.title" :url="resource.url">
         {{ resource.note }}
     </Tile>
    </div>
@@ -31,20 +31,27 @@ export default {
 
   },
   methods: {
-    makeItemsDraggable () {
-      const items = this.$el.querySelectorAll('.js-grid-item-draggable')
-      items.forEach(item => {
-        // eslint-disable-next-line
-        const draggie = new Draggabilly(item)
-        this.pckry.bindDraggabillyEvents(draggie)
+    packArea() {
+      // eslint-disable-next-line
+     this.pckry = new Packery(this.$el, {
+        stamp: '.js-grid-item-stamp',
+        columnWidth: 250,
+        gutter: 15,
+        stagger: 25
       })
-    },
-    addItemsToPckry () {
-      this.pckry.items = []
-      const items = this.$el.querySelectorAll('.js-grid-item')
-      this.pckry.appended(items)
-      this.makeItemsDraggable()
-      this.pckry.layout()
+
+      const items = this.$el.querySelectorAll('.js-grid-item-draggable')
+        items.forEach(item => {
+          // eslint-disable-next-line
+          const draggie = new Draggabilly(item)
+          this.pckry.bindDraggabillyEvents(draggie)
+      })
+
+      this.pckry.on('dragItemPositioned', () => {
+        setTimeout(() => {
+          this.pckry.layout()
+        }, 20)
+      })
     }
   },
   created () {
@@ -53,31 +60,20 @@ export default {
       .orderBy('order')
       .onSnapshot(resources => {
           this.resourceItems = []
-
           resources.forEach(resource => {
-            const resourceItem = resource.data()
+            let resourceItem
+            resourceItem = resource.data()
+            resourceItem['id'] = resource.id
             this.resourceItems.push(resourceItem);
           })
         }
       )
   },
-  mounted () {
-    // eslint-disable-next-line
-    this.pckry = new Packery(this.$el, {
-      stamp: '.js-grid-item-stamp',
-      columnWidth: 200,
-      gutter: 15,
-      stagger: 25
-    })
-
-    this.pckry.on('dragItemPositioned', () => {
-      setTimeout(() => {
-        this.pckry.layout()
-      }, 20)
-    })
-  },
   updated () {
-    this.addItemsToPckry()
+    if (this.pckry !== null) {
+      this.pckry.destroy()
+    }
+    this.packArea()
   }
 }
 </script>

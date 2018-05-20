@@ -33,7 +33,7 @@ export default {
 
 <style lang="scss" scoped>
   .card {
-    width: 200px;
+    width: 250px;
     float: left;
 
     &.is-dragging {
