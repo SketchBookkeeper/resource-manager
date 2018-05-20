@@ -48,12 +48,16 @@ export default {
       })
 
       this.pckry.on('dragItemPositioned', () => {
-        // Update items' order
+        // Update items' order in data()
         this.pckry
           .getItemElements()
           .forEach((item, index) => {
             const itemId = item.id
+            const itemDataIndex = this.resourceItems.findIndex(element => {
+              return item.id === element.id
+            })
 
+            this.resourceItems[itemDataIndex].order = index
           })
 
         setTimeout(() => {
