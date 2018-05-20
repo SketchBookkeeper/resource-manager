@@ -1,19 +1,11 @@
 <template>
-  <div>
-    <div class="collection">
-      <button @click="showModal" class="add-resource js-grid-item js-grid-item-stamp">
-        <i class="material-icons large">add_circle_outline</i>
-      </button>
+  <div class="collection">
+    <!-- <AddButton /> -->
 
-      <Tile title="one" url="https://www.google.com">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore omnis impedit saepe alias delectus? Assumenda tenetur architecto molestias temporibus sapiente error, velit cumque, dolore ipsum harum ratione, consequatur repellendus dolorem.
-      </Tile>
+    <Tile v-for="resource in resourceItems" :key="resource.order" :title="resource.title" :url="resource.url">
+        {{ resource.note }}
+    </Tile>
    </div>
-
-    <Modal title="Add Resource" v-show="isAddModalVisible" @close="closeModal">
-      <Add />
-    </Modal>
-  </div>
 </template>
 
 <script>
@@ -21,58 +13,71 @@ import db from './../firebaseinit'
 import Packery from 'packery'
 import Draggabilly from 'draggabilly'
 import Tile from './Tile'
-import Modal from './Modal'
-import Add from './Add'
+import AddButton from './AddButton'
 export default {
   components: {
     Tile,
-    Modal,
-    Add
+    AddButton
   },
   data () {
     return {
       isAddModalVisible: false,
-      resourceItems: []
+      pckry: null,
+      resourceItems: [],
+      resourceCollection: null
     }
   },
+  computed: {
+
+  },
   methods: {
-    showModal () {
-      this.isAddModalVisible = true
+    makeItemsDraggable () {
+      const items = this.$el.querySelectorAll('.js-grid-item-draggable')
+      items.forEach(item => {
+        // eslint-disable-next-line
+        const draggie = new Draggabilly(item)
+        this.pckry.bindDraggabillyEvents(draggie)
+      })
     },
-    closeModal () {
-      this.isAddModalVisible = false
+    addItemsToPckry () {
+      this.pckry.items = []
+      const items = this.$el.querySelectorAll('.js-grid-item')
+      this.pckry.appended(items)
+      this.makeItemsDraggable()
+      this.pckry.layout()
     }
   },
   created () {
-    db.collection('resources')
+    this.resourceCollection = db
+      .collection('resources')
       .orderBy('order')
-      .get()
-      .then(resources => {
+      .onSnapshot(resources => {
+          this.resourceItems = []
 
-      })
+          resources.forEach(resource => {
+            const resourceItem = resource.data()
+            this.resourceItems.push(resourceItem);
+          })
+        }
+      )
   },
   mounted () {
     // eslint-disable-next-line
-    const pckry = new Packery(this.$el, {
-      itemSelector: '.js-grid-item',
+    this.pckry = new Packery(this.$el, {
       stamp: '.js-grid-item-stamp',
       columnWidth: 200,
       gutter: 15,
       stagger: 25
     })
 
-    const items = this.$el.querySelectorAll('.js-grid-item-draggable')
-    items.forEach(item => {
-      // eslint-disable-next-line
-      const draggie = new Draggabilly(item)
-      pckry.bindDraggabillyEvents(draggie)
-    })
-
-    pckry.on('dragItemPositioned', () => {
+    this.pckry.on('dragItemPositioned', () => {
       setTimeout(() => {
-        pckry.layout()
+        this.pckry.layout()
       }, 20)
     })
+  },
+  updated () {
+    this.addItemsToPckry()
   }
 }
 </script>
@@ -81,15 +86,5 @@ export default {
   .collection {
     margin-top: 5px;
     padding: 0 25px;
-  }
-
-  .add-resource {
-    border: 1px dashed #333;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 200px;
-    height: 200px;
-    left: 0;
-    top: 0;
   }
 </style>
