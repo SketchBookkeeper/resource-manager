@@ -97,7 +97,7 @@ export default {
       .collection('resources')
       .orderBy('order')
       .onSnapshot(resources => {
-        this.resourceItems = [] // remove this make checks for what to add
+        this.resourceItems = [] // TODO just check for new items
 
         resources
           .forEach(resource => {
@@ -115,6 +115,7 @@ export default {
 
   },
   updated () {
+    // Setup Packery instance on first update
     if (this.pckry === null) {
       this.setupPackery()
       this.makeItemsDraggable()
