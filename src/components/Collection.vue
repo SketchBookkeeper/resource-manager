@@ -15,6 +15,10 @@ import Packery from 'packery'
 import Draggabilly from 'draggabilly'
 import Tile from './Tile'
 import AddButton from './AddButton'
+// Some packery functions need to take place after a tranistion
+// Times are set here for ease
+const transitionDuration = 400
+const transitionWaitTime = transitionDuration + 100
 export default {
   components: {
     Tile,
@@ -28,32 +32,45 @@ export default {
       resourceCollection: null
     }
   },
+  computed: {
+    resourceItemsLength: function () {
+      return this.resourceItems.length
+    }
+  },
   watch: {
-
+    resourceItemsLength: function () {
+      if (!this.pckry) return
+      setTimeout(() => {
+        this.pckry.reloadItems()
+        this.makeItemsDraggable()
+        this.pckry.layout()
+      }, transitionWaitTime)
+    }
   },
   methods: {
-    packArea () {
+    setupPackery () {
       // eslint-disable-next-line
-     this.pckry = new Packery(this.$el, {
+      this.pckry = new Packery(this.$el, {
+        selector: '.js-grid-item',
         stamp: '.js-grid-item-stamp',
         columnWidth: 250,
         gutter: 15,
-        stagger: 25
-      })
-
-      const items = this.$el.querySelectorAll('.js-grid-item-draggable')
-      items.forEach(item => {
-        // eslint-disable-next-line
-        const draggie = new Draggabilly(item)
-        this.pckry.bindDraggabillyEvents(draggie)
+        transitionDuration: transitionDuration
       })
 
       this.pckry.on('dragItemPositioned', () => {
         setTimeout(() => {
           this.pckry.layout()
-        }, 30)
-
-        this.debouncedUpdateResourceOrder()
+          this.debouncedUpdateResourceOrder()
+        }, transitionWaitTime)
+      })
+    },
+    makeItemsDraggable () {
+      const items = this.$el.querySelectorAll('.js-grid-item-draggable')
+      items.forEach(item => {
+        // eslint-disable-next-line
+        const draggie = new Draggabilly(item)
+        this.pckry.bindDraggabillyEvents(draggie)
       })
     },
     updateResourceOrder () {
@@ -80,7 +97,8 @@ export default {
       .collection('resources')
       .orderBy('order')
       .onSnapshot(resources => {
-        this.resourceItems = [] // review this
+        this.resourceItems = [] // remove this make checks for what to add
+
         resources
           .forEach(resource => {
             let resourceItem
@@ -90,14 +108,17 @@ export default {
           })
       })
 
-    this.debouncedUpdateResourceOrder = _.debounce(this.updateResourceOrder, 3000)
+    // Create debounced version of UpdateResourceOrder()
+    this.debouncedUpdateResourceOrder = _.debounce(this.updateResourceOrder, 2000)
+  },
+  mounted () {
+
   },
   updated () {
-    // Destory old packery instance if set
-    if (this.pckry !== null) {
-      this.pckry.destroy()
+    if (this.pckry === null) {
+      this.setupPackery()
+      this.makeItemsDraggable()
     }
-    this.packArea()
   }
 }
 </script>
