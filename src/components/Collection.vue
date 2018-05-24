@@ -127,6 +127,5 @@ export default {
 <style lang="scss" scoped>
   .collection {
     margin-top: 5px;
-    padding: 0 25px;
   }
 </style>
