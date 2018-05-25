@@ -2,6 +2,9 @@
 
 > Manage your links
 
+An app for managing links and notes.
+Made with Vue and Firebase
+
 ## Build Setup
 
 ``` bash
