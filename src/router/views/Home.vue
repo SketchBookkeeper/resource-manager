@@ -3,15 +3,19 @@
     <div class="hero-body">
       <div class="sign-up box">
         <h1 class="title is-4">Login</h1>
-
+        <Login />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Login from '@/components/Login'
 export default {
-  name: 'home'
+  name: 'home',
+  components: {
+    Login
+  }
 }
 </script>
 
