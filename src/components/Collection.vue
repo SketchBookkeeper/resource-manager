@@ -1,7 +1,5 @@
 <template>
   <div class="collection">
-    <!-- <AddButton /> -->
-
     <Tile v-for="resource in resourceItems" :id="resource.id" :key="resource.id" :title="resource.title" :url="resource.url">
         {{ resource.note }}
     </Tile>
@@ -14,15 +12,13 @@ import db from './../firebaseinit'
 import Packery from 'packery'
 import Draggabilly from 'draggabilly'
 import Tile from './Tile'
-import AddButton from './AddButton'
 // Some packery functions need to take place after a tranistion
 // Times are set here for ease
 const transitionDuration = 400
 const transitionWaitTime = transitionDuration + 100
 export default {
   components: {
-    Tile,
-    AddButton
+    Tile
   },
   data () {
     return {

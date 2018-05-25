@@ -12,9 +12,15 @@
             </p>
           </div>
         </div>
+        <div class="level-item">
+          <AddButton :user-id="userData.uid" />
+        </div>
       </div>
 
       <div class="level-right">
+        <div class="level-item">
+          {{ userData.email }}
+        </div>
         <div class="level-item">
           <button class="button is-light" @click="logout">Logout</button>
         </div>
@@ -25,8 +31,21 @@
 
 <script>
 import firebase from 'firebase'
+import AddButton from '@/components/AddButton'
 export default {
   name: 'navbar',
+  components: {
+    AddButton
+  },
+  props: ['userData'],
+  data: function () {
+    return {
+
+    }
+  },
+  computed: {
+
+  },
   methods: {
     logout: function () {
       firebase.auth().signOut()
