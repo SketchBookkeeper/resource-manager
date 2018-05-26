@@ -1,6 +1,6 @@
 <template>
   <div class="collection">
-    <Tile v-for="resource in resourceItems" :id="resource.id" :key="resource.id" :title="resource.title" :url="resource.url">
+    <Tile v-for="resource in sortedResourceItems" :id="resource.id" :key="resource.id" :title="resource.title" :url="resource.url">
         {{ resource.note }}
     </Tile>
    </div>
@@ -17,6 +17,11 @@ import Tile from './Tile'
 const transitionDuration = 400
 const transitionWaitTime = transitionDuration + 100
 export default {
+  name: 'collection',
+  props: [
+    'userData',
+    'collection'
+  ],
   components: {
     Tile
   },
@@ -31,6 +36,9 @@ export default {
   computed: {
     resourceItemsLength: function () {
       return this.resourceItems.length
+    },
+    sortedResourceItems: function () {
+      return this.resourceItems.slice(0).sort((a, b) => a.order - b.order)
     }
   },
   watch: {
@@ -91,9 +99,9 @@ export default {
     // Setup realtime database
     this.resourceCollection = db
       .collection('resources')
-      .orderBy('order')
+      .where('uid', '==', this.userData.uid)
       .onSnapshot(resources => {
-        this.resourceItems = [] // TODO just check for new items
+        this.resourceItems = []
 
         resources
           .forEach(resource => {

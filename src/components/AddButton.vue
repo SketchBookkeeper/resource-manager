@@ -74,8 +74,6 @@ export default {
         uid: this.userId
       }
 
-      console.log(newData);
-
       db.collection('resources').add(newData)
         .then(docRef => {
           console.log(docRef)
