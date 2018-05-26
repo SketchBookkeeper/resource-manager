@@ -2,7 +2,7 @@
   <div>
     <Navbar :user-data="user"/>
     <div class="section">
-      <Collection />
+      <Collection :user-data="user"/>
     </div>
   </div>
 </template>
