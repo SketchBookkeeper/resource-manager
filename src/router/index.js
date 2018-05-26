@@ -36,8 +36,7 @@ let router = new Router({
   ]
 })
 
-// Guard
-// Auth
+// Router Guard
 router.beforeEach((to, from, next) => {
   if (
     to.meta.hasOwnProperty('requiresAuth') &&
