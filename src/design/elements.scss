@@ -1,6 +1,9 @@
 //--------------------------------------------------------------
-// SETTINGS
+// ELEMENTS
 //--------------------------------------------------------------
 
-@import '~bulma/bulma.sass';
-@import './elements.scss';
+button {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+}
