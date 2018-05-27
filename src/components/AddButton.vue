@@ -56,7 +56,8 @@ export default {
       isAddModalVisible: false,
       title: '',
       note: '',
-      url: ''
+      url: '',
+      order: 0
     }
   },
   methods: {
@@ -66,22 +67,38 @@ export default {
     closeModal () {
       this.isAddModalVisible = false
     },
+    clearInputs () {
+      this.title = ''
+      this.note = ''
+      this.url = ''
+    },
     addResource () {
       const newData = {
         title: this.title,
         notes: this.note,
         url: this.url,
-        uid: this.userId
+        uid: this.userId,
+        order: this.order
       }
 
       db.collection('resources').add(newData)
         .then(docRef => {
-          console.log(docRef)
+          this.isAddModalVisible = false
+          this.clearInputs()
         })
         .catch(error => {
           console.log(error)
         })
     }
+  },
+  created: function () {
+    this.eventHub.$on('lengthChange', data => {
+      // Collection is passing resource items array lenght via the eventHub
+      this.order = parseInt(data)
+    })
+  },
+  beforeDestroy: function () {
+    this.eventHub.$off('lenghtChange')
   }
 }
 </script>

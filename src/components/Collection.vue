@@ -43,6 +43,8 @@ export default {
   },
   watch: {
     resourceItemsLength: function () {
+      this.eventHub.$emit('lengthChange', this.resourceItemsLength)
+
       if (!this.pckry) return
       setTimeout(() => {
         this.pckry.reloadItems()
