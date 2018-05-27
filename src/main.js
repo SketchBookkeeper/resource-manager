@@ -22,3 +22,13 @@ new Vue({
   },
   template: '<App/>'
 })
+
+const eventHub = new Vue()
+
+Vue.mixin({
+  data: function () {
+    return {
+      eventHub: eventHub
+    }
+  }
+})
