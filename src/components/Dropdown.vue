@@ -8,20 +8,9 @@
       </button>
     </div>
     <div class="dropdown-menu" id="dropdown-menu" role="menu">
-      <div class="dropdown-content">
-        <a href="#" class="dropdown-item">
-          <span class="icon">
-            <i class="material-icons">edit</i>
-          </span>
-          <span>Edit</span>
-        </a>
-        <a href="#" class="dropdown-item">
-          <span class="icon">
-            <i class="material-icons">delete</i>
-          </span>
-          <span>Delete</span>
-        </a>
-      </div>
+      <ul class="dropdown-content">
+        <slot></slot>
+      </ul>
     </div>
   </div>
 </template>
@@ -32,7 +21,8 @@ export default {
   name: 'dropdown',
   mixins: [clickaway],
   props: [
-    'data'
+    'data',
+    'items'
   ],
   data () {
     return {
@@ -46,6 +36,9 @@ export default {
     closeDropdown () {
       this.open = false
     }
+  },
+  created () {
+
   }
 }
 </script>
