@@ -13,7 +13,6 @@
   "dependencies": {
     "@firebase/firestore": "^0.5.3",
     "@firebase/firestore-types": "^0.4.2",
-    "@shopify/draggable": "^1.0.0-beta.7",
     "bulma": "^0.7.1",
     "draggabilly": "^2.2.0",
     "firebase": "^5.0.2",
