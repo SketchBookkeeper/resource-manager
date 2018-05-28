@@ -5,7 +5,7 @@
     </button>
 
     <Modal title="Add Resource" v-show="isAddModalVisible" @close="closeModal">
-      <form action="/index.html">
+      <form action="/index.html" novalidate>
         <div>
           <div class="field">
             <label class="label">Name</label>
@@ -36,6 +36,7 @@
 
           <div class="control">
             <input type="submit" value="Save" class="button is-primary" @click.prevent="addResource" />
+            <button class="button" @click.prevent="closeModal">Cancel</button>
           </div>
         </div>
       </form>
@@ -62,6 +63,7 @@ export default {
   },
   methods: {
     showModal () {
+      this.clearInputs()
       this.isAddModalVisible = true
     },
     closeModal () {
