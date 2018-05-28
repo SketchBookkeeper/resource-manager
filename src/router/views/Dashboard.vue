@@ -4,6 +4,7 @@
     <div class="section">
       <Collection :user-data="user"/>
     </div>
+    <EditResource :user-id="user.uid"></EditResource>
   </div>
 </template>
 
@@ -11,11 +12,13 @@
 import firebase from 'firebase'
 import Navbar from '@/components/Navbar'
 import Collection from '@/components/Collection'
+import EditResource from '@/components/EditResource'
 export default {
   name: 'Dashboard',
   components: {
     Navbar,
-    Collection
+    Collection,
+    EditResource
   },
   computed: {
     user: function () {
