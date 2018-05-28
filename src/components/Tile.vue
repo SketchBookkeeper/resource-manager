@@ -3,6 +3,10 @@
     <div class="card js-grid-item js-grid-item-draggable">
       <div class="card-header">
         <p class="card-header-title">{{ title }}</p>
+
+        <div class="card-header-icon" aria-label="more options">
+          <Dropdown />
+        </div>
       </div>
 
       <div class="card-content">
@@ -17,7 +21,12 @@
 </template>
 
 <script>
+import Dropdown from '@/components/Dropdown'
 export default {
+  name: 'tile',
+  components: {
+    Dropdown
+  },
   props: [
     'title',
     'url'
@@ -26,9 +35,6 @@ export default {
     return {
 
     }
-  },
-  methods: {
-    // todo make sure urls have https:// when saved to database
   }
 }
 </script>
@@ -44,6 +50,7 @@ export default {
     }
   }
 
+  // Animations
   .tile-animation-enter-active {
     transition: transform 500ms ease-out, opacity 400ms;
   }
