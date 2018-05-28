@@ -1,5 +1,5 @@
 <template>
-  <div class="js-grid-item js-grid-item-stamp">
+  <div>
     <button @click="showModal" class="button is-primary add-resource">
       <i class="material-icons large">add_circle_outline</i>
     </button>
