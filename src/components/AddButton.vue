@@ -77,7 +77,7 @@ export default {
     addResource () {
       const newData = {
         title: this.title,
-        notes: this.note,
+        note: this.note,
         url: this.url,
         uid: this.userId,
         order: this.order
