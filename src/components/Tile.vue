@@ -5,7 +5,24 @@
         <p class="card-header-title">{{ title }}</p>
 
         <div class="card-header-icon" aria-label="more options">
-          <Dropdown />
+          <Dropdown>
+            <DropdownItem>
+              <button>
+                <span class="icon">
+                  <i class="is-size-6 material-icons">edit</i>
+                </span>
+                <span class="is-size-6">Edit</span>
+              </button>
+            </DropdownItem>
+            <DropdownItem>
+              <button>
+                <span class="icon">
+                  <i class="is-size-6 material-icons">delete</i>
+                </span>
+                <span class="is-size-6">Delete</span>
+              </button>
+            </DropdownItem>
+          </Dropdown>
         </div>
       </div>
 
@@ -22,14 +39,19 @@
 
 <script>
 import Dropdown from '@/components/Dropdown'
+import DropdownItem from '@/components/DropdownItem'
+import EditResource from '@/components/EditResource'
 export default {
   name: 'tile',
   components: {
-    Dropdown
+    Dropdown,
+    DropdownItem,
+    EditResource
   },
   props: [
     'title',
-    'url'
+    'url',
+    'id'
   ],
   data () {
     return {
