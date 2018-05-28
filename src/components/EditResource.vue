@@ -1,5 +1,5 @@
 <template>
-   <Modal :title="title" v-show="isAddModalVisible" @close="closeModal">
+   <Modal title="Edit" v-show="isAddModalVisible" @close="closeModal">
       <form action="/index.html" novalidate>
         <div>
           <div class="field">
@@ -30,7 +30,7 @@
           </div>
 
           <div class="control">
-            <input type="submit" value="Save" class="button is-primary" @click.prevent="updateResource" />
+            <button class="button is-primary" :class="{'is-loading': isLoading}" @click.prevent="updateResource" >Save</button>
             <button class="button" @click.prevent="closeModal">Cancel</button>
           </div>
         </div>
@@ -49,6 +49,7 @@ export default {
   data () {
     return {
       isAddModalVisible: false,
+      isLoading: false,
       title: '',
       note: '',
       url: '',
@@ -61,8 +62,10 @@ export default {
     },
     closeModal () {
       this.isAddModalVisible = false
+      this.clearData()
     },
     updateResource () {
+      this.isLoading = true
       const documentRef = db.collection('resources').doc(this.docId)
 
       const updatedDoc = {
@@ -73,20 +76,28 @@ export default {
 
       documentRef.update(updatedDoc)
         .then(() => {
-          console.log('updated')
+          this.isLoading = false
         })
         .catch(error => {
           console.log(error)
         })
     },
     clearData () {
+      this.docId = ''
       this.title = ''
       this.note = ''
       this.url = ''
     }
   },
   created: function () {
+    this.eventHub.$on('editResource', (event) => {
+      this.docId = event.id
+      this.title = event.title
+      this.note = event.note
+      this.url = event.url
 
+      this.showModal()
+    })
   },
   beforeDestroy: function () {
 

@@ -1,7 +1,11 @@
 <template>
   <div class="collection">
-    <Tile v-for="resource in sortedResourceItems" :id="resource.id" :key="resource.id" :title="resource.title" :url="resource.url">
-        {{ resource.note }}
+    <Tile v-for="resource in sortedResourceItems"
+      :id="resource.id"
+      :key="resource.id"
+      :title="resource.title"
+      :note ="resource.note"
+      :url="resource.url">
     </Tile>
    </div>
 </template>

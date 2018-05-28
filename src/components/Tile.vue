@@ -7,7 +7,7 @@
         <div class="card-header-icon" aria-label="more options">
           <Dropdown>
             <DropdownItem>
-              <button>
+              <button @click="editResource">
                 <span class="icon">
                   <i class="is-size-6 material-icons">edit</i>
                 </span>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="card-content">
-        <slot></slot>
+        {{ note }}
       </div>
 
       <div class="card-footer">
@@ -50,12 +50,18 @@ export default {
   },
   props: [
     'title',
+    'note',
     'url',
     'id'
   ],
   data () {
     return {
 
+    }
+  },
+  methods: {
+    editResource () {
+      this.eventHub.$emit('editResource', this.$props)
     }
   }
 }
