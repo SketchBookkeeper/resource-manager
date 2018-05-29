@@ -50,7 +50,7 @@ export default {
     'title',
     'note',
     'url',
-    'id'
+    'doc-id'
   ],
   data () {
     return {

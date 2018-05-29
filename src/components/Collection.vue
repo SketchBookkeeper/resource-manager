@@ -3,6 +3,7 @@
     <Tile v-for="resource in sortedResourceItems"
       :id="resource.id"
       :key="resource.id"
+      :doc-id="resource.id"
       :title="resource.title"
       :note ="resource.note"
       :url="resource.url">

@@ -53,7 +53,7 @@ export default {
   },
   created: function () {
     this.eventHub.$on('deleteResource', event => {
-      this.docId = event.id
+      this.docId = event.docId
       this.title = event.title
 
       this.showModal()

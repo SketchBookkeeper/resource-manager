@@ -99,7 +99,7 @@ export default {
   },
   created: function () {
     this.eventHub.$on('editResource', (event) => {
-      this.docId = event.id
+      this.docId = event.docId
       this.title = event.title
       this.note = event.note
       this.url = event.url
