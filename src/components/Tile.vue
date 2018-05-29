@@ -15,7 +15,7 @@
               </button>
             </DropdownItem>
             <DropdownItem>
-              <button>
+              <button @click="deleteResource">
                 <span class="icon">
                   <i class="is-size-6 material-icons">delete</i>
                 </span>
@@ -30,7 +30,7 @@
         {{ note }}
       </div>
 
-      <div class="card-footer">
+      <div v-if="url" class="card-footer">
         <a :href="url" target="_blank" class="card-footer-item view">View</a>
       </div>
     </div>
@@ -40,13 +40,11 @@
 <script>
 import Dropdown from '@/components/Dropdown'
 import DropdownItem from '@/components/DropdownItem'
-import EditResource from '@/components/EditResource'
 export default {
   name: 'tile',
   components: {
     Dropdown,
-    DropdownItem,
-    EditResource
+    DropdownItem
   },
   props: [
     'title',
@@ -62,6 +60,9 @@ export default {
   methods: {
     editResource () {
       this.eventHub.$emit('editResource', this.$props)
+    },
+    deleteResource () {
+      this.eventHub.$emit('deleteResource', this.$props)
     }
   }
 }
