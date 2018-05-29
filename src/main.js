@@ -6,22 +6,11 @@ import router from './router'
 import Modal from './components/Modal'
 import Collection from './components/Collection'
 import Tile from './components/Tile'
+import FlashMessage from './components/FlashMessage'
+import EditResource from './components/EditResource'
 import './design/settings.scss'
 
 Vue.config.productionTip = false
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: {
-    App,
-    Modal,
-    Collection,
-    Tile
-  },
-  template: '<App/>'
-})
 
 const eventHub = new Vue()
 
@@ -31,4 +20,19 @@ Vue.mixin({
       eventHub: eventHub
     }
   }
+})
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  components: {
+    App,
+    Modal,
+    Collection,
+    Tile,
+    FlashMessage,
+    EditResource
+  },
+  template: '<App/>'
 })

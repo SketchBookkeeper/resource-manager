@@ -1,12 +1,17 @@
 <template>
   <div id="app">
+    <FlashMessage />
     <router-view/>
   </div>
 </template>
 
 <script>
+import FlashMessage from '@/components/FlashMessage'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    FlashMessage
+  }
 }
 </script>
 

@@ -64,6 +64,12 @@ export default {
       this.isAddModalVisible = false
       this.clearData()
     },
+    sendNoficiation () {
+      this.eventHub.$emit('notification', {
+        message: `${this.title} was updated.`,
+        type: 'is-primary'
+      })
+    },
     updateResource () {
       this.isLoading = true
       const documentRef = db.collection('resources').doc(this.docId)
@@ -81,6 +87,8 @@ export default {
         .catch(error => {
           console.log(error)
         })
+
+      this.sendNoficiation()
     },
     clearData () {
       this.docId = ''
