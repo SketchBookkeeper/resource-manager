@@ -35,7 +35,7 @@
           </div>
 
           <div class="control">
-            <input type="submit" value="Save" class="button is-primary" @click.prevent="addResource" />
+            <input type="submit" value="Save" class="button is-primary" @click.prevent="addResource" :disabled="isLoading ? true : false" />
             <button class="button" @click.prevent="closeModal">Cancel</button>
           </div>
         </div>
@@ -55,6 +55,7 @@ export default {
   data () {
     return {
       isAddModalVisible: false,
+      isLoading: false,
       title: '',
       note: '',
       url: '',
@@ -75,6 +76,8 @@ export default {
       this.url = ''
     },
     addResource () {
+      this.isLoading = true
+
       const newData = {
         title: this.title,
         note: this.note,
@@ -86,6 +89,7 @@ export default {
       db.collection('resources').add(newData)
         .then(docRef => {
           this.isAddModalVisible = false
+          this.isLoading = false
           this.clearInputs()
         })
         .catch(error => {

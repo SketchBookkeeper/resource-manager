@@ -30,7 +30,7 @@
           </div>
 
           <div class="control">
-            <button class="button is-primary" :class="{'is-loading': isLoading}" @click.prevent="updateResource" >Save</button>
+            <button class="button is-primary" :class="{'is-loading': isLoading}" @click.prevent="updateResource" :disabled="isLoading ? true : false">Save</button>
             <button class="button" @click.prevent="closeModal">Cancel</button>
           </div>
         </div>
