@@ -39,10 +39,18 @@ export default {
 
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
+          this.eventHub.$emit('notification', {
+            message: `Welcome ${user.user.email}`,
+            type: 'is-primary'
+          })
+
           this.$router.push('/dashboard')
         })
         .catch(error => {
-          console.log(error)
+          this.eventHub.$emit('notification', {
+            message: error.message,
+            type: 'is-danger'
+          })
         })
     }
   }
