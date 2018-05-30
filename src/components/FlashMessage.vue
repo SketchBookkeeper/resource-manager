@@ -59,21 +59,21 @@ export default {
   }
 
   .notification-animation-enter {
-    opacity: 0.8;
-    transform: scale(1);
+    opacity: 0;
+    transform: translateY(-25%);
   }
 
   .notification-animation-enter-to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
   }
 
   .notification-animation-leave-active {
-    transition: transform 300ms ease-out, opacity 300ms;
+    transition: transform 300ms ease-in, opacity 300ms;
   }
 
   .notification-animation-leave-to {
     opacity: 0;
-    transform: scale(1);
+    transform: translateY(15%);
   }
 </style>
