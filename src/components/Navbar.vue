@@ -50,6 +50,11 @@ export default {
     logout: function () {
       firebase.auth().signOut()
         .then(() => {
+          this.eventHub.$emit('notification', {
+            message: 'Logged Out',
+            type: ''
+          })
+
           this.$router.push('/')
         })
     }

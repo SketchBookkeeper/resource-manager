@@ -39,11 +39,19 @@ export default {
 
       documentRef.delete()
         .then(() => {
+          this.eventHub.$emit('notification', {
+            message: `Deleted ${this.title}.`,
+            type: 'is-primary'
+          })
+
           this.closeModal()
           this.clearData()
         })
-        .catch(error => {
-          console.log(error)
+        .catch(() => {
+          this.eventHub.$emit('notification', {
+            message: 'Opps, something broke...',
+            type: 'is-danger'
+          })
         })
     },
     clearData () {
