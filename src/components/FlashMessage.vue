@@ -2,7 +2,7 @@
   <div class="flash-messages">
       <transition-group name="notification-animation">
     <Notification v-for="notification in notifications"
-      :key="notification.timeStamp"
+      :key="notification.uid"
       :type="notification.type">
 
       {{ notification.message }}
@@ -29,7 +29,7 @@ export default {
       this.notifications.unshift({
         type: event.type,
         message: event.message,
-        timeStamp: new Date().getTime()
+        uid: new Date().getTime() + event.message
       })
 
       setTimeout(() => {

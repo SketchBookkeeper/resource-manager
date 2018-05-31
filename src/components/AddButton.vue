@@ -47,10 +47,12 @@
 <script>
 import db from './../firebaseinit'
 import Modal from './Modal'
+import validation from '@/mixins/resource-validation'
 export default {
   components: {
     Modal
   },
+  mixins: [ validation ],
   props: ['userId'],
   data () {
     return {
@@ -76,6 +78,11 @@ export default {
       this.url = ''
     },
     addResource () {
+      if (!this.checkForm()) {
+        this.showErrors()
+        return
+      }
+
       this.isLoading = true
 
       const newData = {
