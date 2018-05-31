@@ -41,10 +41,12 @@
 <script>
 import db from './../firebaseinit'
 import Modal from './Modal'
+import validation from '@/mixins/resource-validation'
 export default {
   components: {
     Modal
   },
+  mixins: [ validation ],
   props: [ 'userId' ],
   data () {
     return {
@@ -65,6 +67,11 @@ export default {
       this.clearData()
     },
     updateResource () {
+      if (!this.checkForm()) {
+        this.showErrors()
+        return
+      }
+
       this.isLoading = true
       const documentRef = db.collection('resources').doc(this.docId)
 
