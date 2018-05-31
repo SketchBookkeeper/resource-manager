@@ -1,7 +1,7 @@
 <template>
   <div class="flash-messages">
       <transition-group name="notification-animation">
-    <Notification v-for="notification in notifications"
+    <Notification v-for="notification in truncatedNotifications"
       :key="notification.uid"
       :type="notification.type">
 
@@ -22,6 +22,12 @@ export default {
   data () {
     return {
       notifications: []
+    }
+  },
+  computed: {
+    truncatedNotifications: function () {
+      // Never show more than 4 notification at a time
+      return this.notifications.slice(0, 4)
     }
   },
   methods: {
