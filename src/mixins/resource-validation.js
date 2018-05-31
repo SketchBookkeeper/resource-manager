@@ -13,8 +13,8 @@ export default {
       // eslint-disable-next-line
       const validUrl = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm)
 
-      if (this.title === '') this.errors.push('Title must not be blank')
-      if (this.url !== '' && !validUrl.test(this.url)) this.errors.push('Please provide a valid url, including the protocol "https://"')
+      if (this.title === '') this.errors.push('Title must not be blank.')
+      if (this.url !== '' && !validUrl.test(this.url)) this.errors.push('Please provide a valid url, including the protocol "https://".')
 
       if (this.errors.length > 0) return false
       return true
