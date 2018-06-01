@@ -7,6 +7,17 @@ import Register from '@/router/views/Register'
 
 Vue.use(Router)
 
+function checkForUser () {
+  // eslint-disable-next-line
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      resolve(user)
+      reject(new Error('user error'))
+    })
+  })
+}
+
+// Views
 let router = new Router({
   routes: [
     {
@@ -38,31 +49,40 @@ let router = new Router({
 
 // Router Guard
 router.beforeEach((to, from, next) => {
-  if (
-    to.meta.hasOwnProperty('requiresAuth') &&
-    to.meta.requiresAuth === true
-  ) {
-    if (!firebase.auth().currentUser) {
+  checkForUser() // wait for user to be determined
+    .then(user => {
+      if ( // Only allow logged in users
+        to.meta.hasOwnProperty('requiresAuth') &&
+        to.meta.requiresAuth === true
+      ) {
+        if (!user) { // Not a user, redirect to home page, otherwise continue
+          next({
+            path: '/'
+          })
+        } else {
+          next()
+        }
+      } else if ( // Only allow non logged in users
+        to.meta.hasOwnProperty('requiresGuest') &&
+        to.meta.requiresGuest === true
+      ) {
+        if (user) { // Logged in user, redirect to dashboard
+          next({
+            path: '/dashboard'
+          })
+        } else {
+          next()
+        }
+      } else { // Hander for views assessable to all
+        next()
+      }
+    })
+    .catch(error => {
+      console.log(error)
       next({
-        path: '/register'
+        path: '/'
       })
-    } else {
-      next()
-    }
-  } else if (
-    to.meta.hasOwnProperty('requiresGuest') &&
-    to.meta.requiresGuest === true
-  ) {
-    if (firebase.auth().currentUser) {
-      next({
-        path: '/dashboard'
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
+    })
 })
 
 export default router
