@@ -1,5 +1,5 @@
 <template>
-  <div class="hero is-fullheight" >
+  <div class="hero is-bold is-light is-fullheight" >
     <div class="hero-head">
       <div class="navbar">
         <div class="container">
@@ -14,7 +14,7 @@
 
     <div class="hero-body">
       <div class="sign-up box">
-        <h1 class="title is-4">Register For An Account</h1>
+        <h1 class="title is-4 has-text-primary">Register For An Account</h1>
         <SignUp />
       </div>
     </div>
@@ -33,11 +33,6 @@ export default {
 
 <style lang="scss" scoped>
   .hero {
-    background-image: url(../../assets/register.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-
     &-body {
       justify-content: center;
     }
