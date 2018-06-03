@@ -5,7 +5,7 @@
         <div class="level-item">
           <div class="field">
             <p class="control">
-              <input class="input" type="text" placeholder="Search">
+              <input class="input" type="text" placeholder="Search All">
             </p>
           </div>
         </div>

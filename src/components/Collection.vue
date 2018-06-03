@@ -50,30 +50,13 @@ export default {
     resourceItemsLength: function () {
       this.eventHub.$emit('lengthChange', this.resourceItemsLength)
 
-      if (!this.pckry) return
-      setTimeout(() => {
-        this.pckry.reloadItems()
-        this.makeItemsDraggable()
-        this.pckry.layout()
-      }, transitionWaitTime)
+      this.reloadPackery()
     },
     collection: function () {
-      // Setup realtime database
-      this.resourceCollection = db
-        .collection('resources')
-        .where('uid', '==', this.userData.uid)
-        .where('collection', '==', this.collection)
-        .onSnapshot(resources => {
-          this.resourceItems = []
-
-          resources
-            .forEach(resource => {
-              let resourceItem
-              resourceItem = resource.data()
-              resourceItem['id'] = resource.id
-              this.resourceItems.push(resourceItem)
-            })
-        })
+      this.loadResources()
+        .then(() => [
+          this.reloadPackery()
+        ])
     }
   },
   methods: {
@@ -94,12 +77,42 @@ export default {
         }, transitionWaitTime)
       })
     },
+    reloadPackery () {
+      if (!this.pckry) return
+
+      setTimeout(() => {
+        this.pckry.reloadItems()
+        this.makeItemsDraggable()
+        this.pckry.layout()
+      }, transitionWaitTime)
+    },
     makeItemsDraggable () {
       const items = this.$el.querySelectorAll('.js-grid-item-draggable')
       items.forEach(item => {
         // eslint-disable-next-line
         const draggie = new Draggabilly(item)
         this.pckry.bindDraggabillyEvents(draggie)
+      })
+    },
+    loadResources () {
+      return new Promise((resolve, reject) => {
+        this.resourceCollection = db
+          .collection('resources')
+          .where('uid', '==', this.userData.uid)
+          .where('collection', '==', this.collection)
+          .onSnapshot(resources => {
+            this.resourceItems = []
+
+            resources
+              .forEach(resource => {
+                let resourceItem
+                resourceItem = resource.data()
+                resourceItem['id'] = resource.id
+                this.resourceItems.push(resourceItem)
+              })
+
+            resolve(this.resourceItems)
+          })
       })
     },
     updateResourceOrder () {
