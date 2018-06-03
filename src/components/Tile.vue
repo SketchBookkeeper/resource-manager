@@ -5,7 +5,7 @@
         <p class="card-header-title">{{ title }}</p>
 
         <div class="card-header-icon" aria-label="more options">
-          <Dropdown>
+          <Dropdown icon="more_vert">
             <DropdownItem>
               <button @click="editResource">
                 <span class="icon">
