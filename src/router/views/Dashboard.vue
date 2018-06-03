@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar :user-data="user" :collections="collections" :active-collection="activeCollection"/>
+    <Navbar :user-data="user" :collections="collections" :active-collection="activeCollection.id"/>
     <div class="section">
       <Collection :user-data="user" :collection="activeCollection"/>
     </div>
@@ -27,7 +27,9 @@ export default {
   data () {
     return {
       collections: [],
-      activeCollection: {}
+      activeCollection: {
+        id: 0
+      }
     }
   },
   computed: {
@@ -52,7 +54,9 @@ export default {
       })
 
     this.eventHub.$on('collectionChange', event => {
-      this.activeCollection = this.collections[event.collectionIndex]
+      this.activeCollection = this.collections.find(item => {
+        return item.id === event.collectionId
+      })
     })
   }
 }

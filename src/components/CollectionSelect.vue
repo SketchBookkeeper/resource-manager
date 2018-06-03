@@ -2,7 +2,7 @@
   <div class="control has-icons-left">
     <div class="select">
       <select id="select-collection" v-model="selectedCollection">
-        <option v-for="(collection, index) in collections" :value="index" :key="collection.id" >
+        <option v-for="collection in collections" :value="collection.id" :key="collection.id" >
           {{ collection.name }}
         </option>
       </select>
@@ -28,11 +28,11 @@ export default {
       // when the collections are aviable, set the first one as active
       if (this.collections.length > 0 && !this.firstRender) {
         this.firstRender = true
-        this.selectedCollection = 0
+        this.selectedCollection = this.collections[0].id
       }
     },
     selectedCollection: function () {
-      this.eventHub.$emit('collectionChange', {collectionIndex: this.selectedCollection})
+      this.eventHub.$emit('collectionChange', {collectionId: this.selectedCollection})
     }
   }
 }
