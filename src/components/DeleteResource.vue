@@ -41,7 +41,7 @@ export default {
         .then(() => {
           this.eventHub.$emit('notification', {
             message: `Deleted ${this.title}.`,
-            type: 'is-primary'
+            type: 'is-warning'
           })
 
           this.closeModal()
