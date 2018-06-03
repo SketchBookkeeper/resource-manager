@@ -68,6 +68,7 @@ export default {
   .card {
     width: 250px;
     float: left;
+    cursor: grab;
 
     &-header {
       transition: background 100ms 200ms;
@@ -76,6 +77,7 @@ export default {
     &.is-dragging {
       background-color: aquamarine;
       z-index: 300;
+      cursor: grabbing;
     }
   }
 </style>

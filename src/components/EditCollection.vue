@@ -1,19 +1,23 @@
 <template>
   <div>
-    <button @click="showModal" class="is-size-6" title="Add Collection">Add</button>
+    <button @click="showModal">
+      <span class="icon">
+        <i class="is-size-6 material-icons">edit</i>
+      </span>
+    </button>
 
-    <Modal title="New Collection" v-show="isModalVisible" @close="closeModal">
+    <Modal title="Edit Collection" v-show="isModalVisible" @close="closeModal">
       <form action="/index.html" novalidate>
         <div class="field has-addons">
           <div class="control has-icons-left name-field">
-            <input class="input" type="text" name="name" v-model="name" autocomplete="off" placeholder="New Collection Name"/>
+            <input class="input" type="text" name="name" v-model="name" autocomplete="off" />
             <span class="icon is-small is-left">
               <i class="material-icons">folder_open</i>
             </span>
           </div>
 
           <div class="control">
-            <input type="submit" value="Add" class="button is-primary" @click.prevent="addCollection" :disabled="isLoading ? true : false" />
+            <input type="submit" value="Update" class="button is-primary" @click.prevent="editCollection" :disabled="isLoading ? true : false" />
           </div>
         </div>
       </form>
@@ -23,33 +27,30 @@
 
 <script>
 import db from './../firebaseinit'
-import Modal from './Modal'
+import Modal from '@/components/Modal'
 export default {
+  name: 'edit-collection',
   components: {
     Modal
   },
   props: [
-    'userId'
+    'collectionId',
+    'collectionName'
   ],
   data () {
     return {
       isModalVisible: false,
-      isLoading: false,
-      name: ''
+      isLoading: false
     }
   },
   methods: {
     showModal () {
-      this.clearInput()
       this.isModalVisible = true
     },
     closeModal () {
       this.isModalVisible = false
     },
-    clearInput () {
-      this.name = ''
-    },
-    addCollection () {
+    editCollection () {
       if (this.name === '') {
         this.eventHub.$emit('notification', {
           message: 'Collection name cannot be blank',
@@ -61,25 +62,25 @@ export default {
 
       this.isLoading = true
 
-      db.collection('collections').add({
-        name: this.name,
-        uid: this.userId
-      })
+      const collection = db.collection('collections').doc(this.collectionId)
+
+      collection.update({name: this.name})
         .then(docRef => {
           this.eventHub.$emit('notification', {
-            message: `Collection ${this.name} added.`,
+            message: `Collection ${this.name} updated.`,
             type: 'is-primary'
           })
 
           this.isLoading = false
-          this.clearInput()
-          this.closeModal()
         })
         .catch(error => {
           this.isLoading = false
           console.log(error)
         })
     }
+  },
+  created () {
+    this.name = this.collectionName
   }
 }
 </script>
