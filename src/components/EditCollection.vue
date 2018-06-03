@@ -17,7 +17,17 @@
           </div>
 
           <div class="control">
-            <input type="submit" value="Update" class="button is-primary" @click.prevent="editCollection" :disabled="isLoading ? true : false" />
+            <input type="submit" value="Update Name" class="button is-primary" @click.prevent="editCollection" :disabled="isLoading ? true : false" />
+          </div>
+        </div>
+
+        <div class="field has-addons">
+          <div class="control delete-field">
+            <input class="input is-danger" type="text" v-model="confirmDelete" placeholder="Type collection name to confirm delete">
+          </div>
+
+          <div class="control">
+            <input type="submit" value="Delete Collection" class="button is-danger" @click.prevent="deleteCollection">
           </div>
         </div>
       </form>
@@ -40,7 +50,8 @@ export default {
   data () {
     return {
       isModalVisible: false,
-      isLoading: false
+      isLoading: false,
+      confirmDelete: ''
     }
   },
   methods: {
@@ -77,6 +88,34 @@ export default {
           this.isLoading = false
           console.log(error)
         })
+    },
+    deleteCollection () {
+      if (this.name !== this.confirmDelete) {
+        this.eventHub.$emit('notification', {
+          message: 'Name does not match',
+          type: 'is-danger'
+        })
+
+        return
+      }
+
+      db.collection('collections').doc(this.collectionId).delete()
+
+      db.collection('resources')
+        .where('collection', '==', this.collectionId)
+        .get()
+        .then(resources => {
+          resources.forEach(resource => {
+            db.collection('resources').doc(resource.id).delete()
+          })
+
+          this.closeModal()
+
+          this.eventHub.$emit('notification', {
+            message: `${this.name} was deleted.`,
+            type: 'is-warning'
+          })
+        })
     }
   },
   created () {
@@ -86,6 +125,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .delete-field,
   .name-field {
     width: 100%;
   }
