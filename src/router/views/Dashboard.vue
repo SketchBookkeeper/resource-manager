@@ -51,6 +51,8 @@ export default {
             collectionItem['id'] = collection.id
             this.collections.push(collectionItem)
           })
+
+        this.activeCollection = this.collections[0]
       })
 
     this.eventHub.$on('collectionChange', event => {
