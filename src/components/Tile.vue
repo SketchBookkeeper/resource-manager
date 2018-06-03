@@ -78,19 +78,4 @@ export default {
       z-index: 300;
     }
   }
-
-  // Animations
-  .tile-animation-enter-active {
-    transition: transform 500ms ease-out, opacity 400ms;
-  }
-
-  .tile-animation-enter {
-    opacity: 0;
-    transform: scale(0.8)
-  }
-
-  .tile-animation-enter-to {
-    opacity: 1;
-    transform: scale(1);
-  }
 </style>
