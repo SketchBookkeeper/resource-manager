@@ -10,10 +10,7 @@
           </div>
         </div>
         <div class="level-item">
-          <CollectionSelect :collections="collections" />
-        </div>
-        <div class="level-item">
-          <AddCollection :user-id="userData.uid" />
+          <CollectionSelect :collections="collections" :user-id="userData.uid" />
         </div>
         <div class="level-item">
           <AddButton :user-id="userData.uid" :active-collection="activeCollection" />

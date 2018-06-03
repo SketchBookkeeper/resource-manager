@@ -1,10 +1,6 @@
 <template>
   <div>
-    <button @click="showModal" class="button is-light" title="Add Collection">
-      <span class="icon">
-        <i class="material-icons">library_add</i>
-      </span>
-    </button>
+    <button @click="showModal" class="is-size-6" title="Add Collection">Add</button>
 
     <Modal title="New Collection" v-show="isModalVisible" @close="closeModal">
       <form action="/index.html" novalidate>
@@ -78,6 +74,7 @@ export default {
           this.isAddModalVisible = false
           this.isLoading = false
           this.clearInput()
+          this.closeModal()
         })
         .catch(error => {
           console.log(error)

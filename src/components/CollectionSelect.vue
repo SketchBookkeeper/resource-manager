@@ -1,36 +1,40 @@
 <template>
-  <div class="control has-icons-left">
-    <div class="select">
-      <select id="select-collection" v-model="selectedCollection">
-        <option v-for="collection in collections" :value="collection.id" :key="collection.id" >
-          {{ collection.name }}
-        </option>
-      </select>
-      <span class="icon is-left">
-        <i class="material-icons">folder_open</i>
-      </span>
-    </div>
-  </div>
+  <Dropdown title="Collections" icon="folder_open">
+    <DropdownItem v-for="collection in collections" :key="collection.id" >
+      <button class="is-size-6" @click="selectedCollection = collection.id">
+        <span>{{ collection.name }}</span>
+      </button>
+    </DropdownItem>
+
+    <hr class="dropdown-divider">
+
+    <DropdownItem>
+      <AddCollection :user-id="userId" />
+    </DropdownItem>
+  </Dropdown>
 </template>
 
 <script>
+import Dropdown from '@/components/Dropdown'
+import DropdownItem from '@/components/DropdownItem'
+import AddCollection from '@/components/AddCollection'
 export default {
   name: 'collection-select',
-  props: ['collections'],
+  props: [
+    'collections',
+    'userId'
+  ],
+  components: {
+    Dropdown,
+    DropdownItem,
+    AddCollection
+  },
   data () {
     return {
-      selectedCollection: '',
-      firstRender: false
+      selectedCollection: ''
     }
   },
   watch: {
-    collections: function () {
-      // when the collections are aviable, set the first one as active
-      if (this.collections.length > 0 && !this.firstRender) {
-        this.firstRender = true
-        this.selectedCollection = this.collections[0].id
-      }
-    },
     selectedCollection: function () {
       this.eventHub.$emit('collectionChange', {collectionId: this.selectedCollection})
     }

@@ -1,9 +1,10 @@
 <template>
   <div class="dropdown" :class="{'is-active' : open}" v-on-clickaway="closeDropdown">
     <div class="dropdown-trigger" @click="toggleDropdown">
-      <button aria-haspopup="true" aria-controls="dropdown-menu">
+      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+        <span>{{ title }}</span>
         <span class="icon">
-          <i class="material-icons">more_vert</i>
+          <i class="material-icons">{{ icon }}</i>
         </span>
       </button>
     </div>
@@ -21,6 +22,8 @@ export default {
   name: 'dropdown',
   mixins: [clickaway],
   props: [
+    'title',
+    'icon',
     'data',
     'items'
   ],
