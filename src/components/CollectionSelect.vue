@@ -1,11 +1,14 @@
 <template>
-  <div class="control">
+  <div class="control has-icons-left">
     <div class="select">
-      <select v-model="selectedCollection">
+      <select id="select-collection" v-model="selectedCollection">
         <option v-for="collection in collections" :value="collection.id" :key="collection.id" >
           {{ collection.name }}
         </option>
       </select>
+      <span class="icon is-left">
+        <i class="material-icons">folder_open</i>
+      </span>
     </div>
   </div>
 </template>
