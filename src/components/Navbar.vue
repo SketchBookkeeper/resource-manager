@@ -13,6 +13,9 @@
           <CollectionSelect :collections="collections" />
         </div>
         <div class="level-item">
+          <AddCollection :user-id="userData.uid" />
+        </div>
+        <div class="level-item">
           <AddButton :user-id="userData.uid" :active-collection="activeCollection" />
         </div>
       </div>
@@ -33,11 +36,13 @@
 import firebase from 'firebase'
 import AddButton from '@/components/AddButton'
 import CollectionSelect from '@/components/CollectionSelect'
+import AddCollection from '@/components/AddCollection'
 export default {
   name: 'navbar',
   components: {
     AddButton,
-    CollectionSelect
+    CollectionSelect,
+    AddCollection
   },
   props: [
     'userData',

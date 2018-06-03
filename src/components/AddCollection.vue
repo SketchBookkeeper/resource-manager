@@ -1,0 +1,94 @@
+<template>
+  <div>
+    <button @click="showModal" class="button is-light" title="Add Collection">
+      <span class="icon">
+        <i class="material-icons">library_add</i>
+      </span>
+    </button>
+
+    <Modal title="New Collection" v-show="isModalVisible" @close="closeModal">
+      <form action="/index.html" novalidate>
+        <div class="field has-addons">
+          <div class="control has-icons-left name-field">
+            <input class="input" type="text" name="name" v-model="name" autocomplete="off" placeholder="New Collection Name"/>
+            <span class="icon is-small is-left">
+              <i class="material-icons">folder_open</i>
+            </span>
+          </div>
+
+          <div class="control">
+            <input type="submit" value="Add" class="button is-primary" @click.prevent="addCollection" :disabled="isLoading ? true : false" />
+          </div>
+        </div>
+      </form>
+    </Modal>
+  </div>
+</template>
+
+<script>
+import db from './../firebaseinit'
+import Modal from './Modal'
+export default {
+  components: {
+    Modal
+  },
+  props: [
+    'userId'
+  ],
+  data () {
+    return {
+      isModalVisible: false,
+      isLoading: false,
+      name: ''
+    }
+  },
+  methods: {
+    showModal () {
+      this.clearInput()
+      this.isModalVisible = true
+    },
+    closeModal () {
+      this.isModalVisible = false
+    },
+    clearInput () {
+      this.name = ''
+    },
+    addCollection () {
+      if (this.name === '') {
+        this.eventHub.$emit('notification', {
+          message: 'Collection name cannot be blank',
+          type: 'is-danger'
+        })
+
+        return
+      }
+
+      this.isLoading = true
+
+      db.collection('collections').add({
+        name: this.name,
+        uid: this.userId
+      })
+        .then(docRef => {
+          this.eventHub.$emit('notification', {
+            message: `Collection ${this.name} added.`,
+            type: 'is-primary'
+          })
+
+          this.isAddModalVisible = false
+          this.isLoading = false
+          this.clearInput()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .name-field {
+    width: 100%;
+  }
+</style>
