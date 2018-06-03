@@ -1,7 +1,10 @@
 <template>
   <div>
     <button @click="showModal" class="button is-primary add-resource">
-      <i class="material-icons large">add_circle_outline</i>
+      <span class="icon">
+        <i class="material-icons">add_circle_outline</i>
+      </span>
+      <span>Add Item</span>
     </button>
 
     <Modal title="Add Resource" v-show="isAddModalVisible" @close="closeModal">
