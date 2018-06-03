@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Navbar :user-data="user"/>
+    <Navbar :user-data="user" :collections="collections" :active-collection="activeCollection"/>
     <div class="section">
-      <Collection :user-data="user"/>
+      <Collection :user-data="user" :collection="activeCollection"/>
     </div>
     <EditResource :user-id="user.uid" />
     <DeleteResource :user-id="user.uid" />
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import db from './../../firebaseinit'
 import firebase from 'firebase'
 import Navbar from '@/components/Navbar'
 import Collection from '@/components/Collection'
@@ -23,10 +24,36 @@ export default {
     EditResource,
     DeleteResource
   },
+  data () {
+    return {
+      collections: [],
+      activeCollection: 0
+    }
+  },
   computed: {
     user: function () {
       return firebase.auth().currentUser
     }
+  },
+  created () {
+    this.collections = db
+      .collection('collections')
+      .where('uid', '==', this.user.uid)
+      .onSnapshot(collections => {
+        this.collections = []
+
+        collections
+          .forEach(collection => {
+            let collectionItem
+            collectionItem = collection.data()
+            collectionItem['id'] = collection.id
+            this.collections.push(collectionItem)
+          })
+      })
+
+    this.eventHub.$on('collectionChange', event => {
+      this.activeCollection = event.collectionId
+    })
   }
 }
 </script>

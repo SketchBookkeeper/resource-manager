@@ -56,6 +56,24 @@ export default {
         this.makeItemsDraggable()
         this.pckry.layout()
       }, transitionWaitTime)
+    },
+    collection: function () {
+      // Setup realtime database
+      this.resourceCollection = db
+        .collection('resources')
+        .where('uid', '==', this.userData.uid)
+        .where('collection', '==', this.collection)
+        .onSnapshot(resources => {
+          this.resourceItems = []
+
+          resources
+            .forEach(resource => {
+              let resourceItem
+              resourceItem = resource.data()
+              resourceItem['id'] = resource.id
+              this.resourceItems.push(resourceItem)
+            })
+        })
     }
   },
   methods: {
@@ -103,27 +121,8 @@ export default {
     }
   },
   created () {
-    // Setup realtime database
-    this.resourceCollection = db
-      .collection('resources')
-      .where('uid', '==', this.userData.uid)
-      .onSnapshot(resources => {
-        this.resourceItems = []
-
-        resources
-          .forEach(resource => {
-            let resourceItem
-            resourceItem = resource.data()
-            resourceItem['id'] = resource.id
-            this.resourceItems.push(resourceItem)
-          })
-      })
-
     // Create debounced version of UpdateResourceOrder()
     this.debouncedUpdateResourceOrder = _.debounce(this.updateResourceOrder, 2000)
-  },
-  mounted () {
-
   },
   updated () {
     // Setup Packery instance on first update

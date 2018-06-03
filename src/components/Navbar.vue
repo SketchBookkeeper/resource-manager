@@ -3,17 +3,17 @@
     <nav class="level">
       <div class="level-left">
         <div class="level-item">
-          <div class="field has-addons">
+          <div class="field">
             <p class="control">
-              <input class="input" type="text" placeholder="Search Collection">
-            </p>
-            <p class="control">
-              <button class="button">Search</button>
+              <input class="input" type="text" placeholder="Search">
             </p>
           </div>
         </div>
         <div class="level-item">
-          <AddButton :user-id="userData.uid" />
+          <CollectionSelect :collections="collections" />
+        </div>
+        <div class="level-item">
+          <AddButton :user-id="userData.uid" :active-collection="activeCollection" />
         </div>
       </div>
 
@@ -32,12 +32,18 @@
 <script>
 import firebase from 'firebase'
 import AddButton from '@/components/AddButton'
+import CollectionSelect from '@/components/CollectionSelect'
 export default {
   name: 'navbar',
   components: {
-    AddButton
+    AddButton,
+    CollectionSelect
   },
-  props: ['userData'],
+  props: [
+    'userData',
+    'collections',
+    'activeCollection'
+  ],
   data: function () {
     return {
 

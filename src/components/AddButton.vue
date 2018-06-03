@@ -53,7 +53,10 @@ export default {
     Modal
   },
   mixins: [ validation ],
-  props: ['userId'],
+  props: [
+    'userId',
+    'activeCollection'
+  ],
   data () {
     return {
       isAddModalVisible: false,
@@ -89,8 +92,9 @@ export default {
         title: this.title,
         note: this.note,
         url: this.url,
+        order: this.order,
         uid: this.userId,
-        order: this.order
+        collection: this.activeCollection
       }
 
       db.collection('resources').add(newData)
