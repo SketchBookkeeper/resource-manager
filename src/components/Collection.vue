@@ -6,7 +6,9 @@
       :doc-id="resource.id"
       :title="resource.title"
       :note ="resource.note"
-      :url="resource.url">
+      :url="resource.url"
+      :color="collection.color"
+    >
     </Tile>
    </div>
 </template>
@@ -23,10 +25,18 @@ const transitionDuration = 0
 const transitionWaitTime = transitionDuration + 100
 export default {
   name: 'collection',
-  props: [
-    'userData',
-    'collection'
-  ],
+  props: {
+    userData: Object,
+    collection: {
+      type: Object,
+      default: function () {
+        return {
+          id: '0',
+          color: '#333333'
+        }
+      }
+    }
+  },
   components: {
     Tile
   },
@@ -99,7 +109,7 @@ export default {
         this.resourceCollection = db
           .collection('resources')
           .where('uid', '==', this.userData.uid)
-          .where('collection', '==', this.collection)
+          .where('collection', '==', this.collection.id)
           .onSnapshot(resources => {
             this.resourceItems = []
 

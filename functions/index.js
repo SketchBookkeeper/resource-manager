@@ -3,6 +3,8 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
+// Test
+// assignCollectionColor({name: 'new', uid: 'C7fDPD1AkHYZ8dTVKjKX43aiZRe2'}, {params: { collectionId: 'DHNWSG3TkRDMRtr0K89Z' }})
 exports.assignCollectionColor = functions.firestore
   .document('collections/{collectionId}')
   .onCreate((snap, context) => {

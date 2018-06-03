@@ -1,7 +1,7 @@
 <template>
   <transition name="tile-animation">
     <div class="card js-grid-item js-grid-item-draggable">
-      <div class="card-header">
+      <div class="card-header" :style="{background: color}">
         <p class="card-header-title">{{ title }}</p>
 
         <div class="card-header-icon" aria-label="more options">
@@ -50,13 +50,9 @@ export default {
     'title',
     'note',
     'url',
-    'doc-id'
+    'doc-id',
+    'color'
   ],
-  data () {
-    return {
-
-    }
-  },
   methods: {
     editResource () {
       this.eventHub.$emit('editResource', this.$props)
@@ -72,6 +68,10 @@ export default {
   .card {
     width: 250px;
     float: left;
+
+    &-header {
+      transition: background 100ms 200ms;
+    }
 
     &.is-dragging {
       background-color: aquamarine;

@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       collections: [],
-      activeCollection: 0
+      activeCollection: {}
     }
   },
   computed: {
@@ -52,7 +52,7 @@ export default {
       })
 
     this.eventHub.$on('collectionChange', event => {
-      this.activeCollection = event.collectionId
+      this.activeCollection = this.collections[event.collectionIndex]
     })
   }
 }
