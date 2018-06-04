@@ -3,13 +3,6 @@
     <nav class="level">
       <div class="level-left">
         <div class="level-item">
-          <div class="field">
-            <p class="control">
-              <input class="input" type="text" placeholder="Search All">
-            </p>
-          </div>
-        </div>
-        <div class="level-item">
           <CollectionSelect :collections="collections" :user-id="userData.uid" />
         </div>
         <div class="level-item">

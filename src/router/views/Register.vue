@@ -16,6 +16,7 @@
       <div class="sign-up box">
         <h1 class="title is-4 has-text-primary">Register For An Account</h1>
         <SignUp />
+        <SignInAlt />
       </div>
     </div>
   </div>
@@ -23,10 +24,12 @@
 
 <script>
 import SignUp from '@/components/SignUp'
+import SignInAlt from '@/components/AltSignIn'
 export default {
   name: 'Register',
   components: {
-    SignUp
+    SignUp,
+    SignInAlt
   }
 }
 </script>

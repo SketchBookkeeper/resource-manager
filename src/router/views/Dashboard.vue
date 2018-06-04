@@ -2,6 +2,7 @@
   <div>
     <Navbar :user-data="user" :collections="collections" :active-collection="activeCollection.id"/>
     <div class="section">
+      <h1 class="title is-2" :style="{ color: activeCollection.color }">{{ activeCollection.name }}</h1>
       <Collection :user-data="user" :collection="activeCollection"/>
     </div>
     <EditResource :user-id="user.uid" />
@@ -28,7 +29,9 @@ export default {
     return {
       collections: [],
       activeCollection: {
-        id: null
+        id: null,
+        name: '',
+        color: '#333333'
       }
     }
   },

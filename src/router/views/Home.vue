@@ -21,6 +21,7 @@
             <a href="#" @click.prevent="openModal">Forgot Password</a>
           </div>
         </div>
+        <SignInAlt />
       </div>
     </div>
 
@@ -32,12 +33,14 @@
 
 <script>
 import Login from '@/components/Login'
+import SignInAlt from '@/components/AltSignIn'
 import ResetPassword from '@/components/ResetPassword'
 import Modal from '@/components/Modal'
 export default {
   name: 'home',
   components: {
     Login,
+    SignInAlt,
     ResetPassword,
     Modal
   },
