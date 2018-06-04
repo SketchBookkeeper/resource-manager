@@ -38,7 +38,7 @@
           </div>
 
           <div class="control">
-            <input type="submit" value="Save" class="button is-primary" @click.prevent="addResource" :disabled="isLoading ? true : false" />
+            <input type="submit" value="Save" class="button is-primary" :class="{ 'is-loading' : isLoading }" @click.prevent="addResource" :disabled="isLoading ? true : false" />
             <button class="button" @click.prevent="closeModal">Cancel</button>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default {
 
       db.collection('resources').add(newData)
         .then(docRef => {
-          this.isAddModalVisible = false
+          this.closeModal()
           this.isLoading = false
           this.clearInputs()
         })
