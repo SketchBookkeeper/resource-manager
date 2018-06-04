@@ -1,6 +1,6 @@
 <template>
   <transition name="tile-animation">
-    <div class="card js-grid-item js-grid-item-draggable">
+    <div class="card resource-card js-grid-item js-grid-item-draggable">
       <div class="card-header" :style="{background: color}">
         <p class="card-header-title">{{ title }}</p>
 
@@ -78,6 +78,18 @@ export default {
       background-color: aquamarine;
       z-index: 300;
       cursor: grabbing;
+    }
+  }
+</style>
+
+<style lang="scss">
+  // Style it's dropdown
+  .resource-card {
+    .dropdown {
+      .button {
+        background-color: transparent;
+        border: 0;
+      }
     }
   }
 </style>
