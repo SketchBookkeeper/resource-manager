@@ -3,6 +3,11 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   response.send("Hello from Firebase!");
+//  });
+
+// Give new collections a random color
 // Test
 // assignCollectionColor({name: 'new', uid: 'C7fDPD1AkHYZ8dTVKjKX43aiZRe2'}, {params: { collectionId: 'DHNWSG3TkRDMRtr0K89Z' }})
 exports.assignCollectionColor = functions.firestore
@@ -24,27 +29,4 @@ exports.assignCollectionColor = functions.firestore
       })
   })
 
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   response.send("Hello from Firebase!");
-//  });
-
-// Test function
-// orderResources({title: 'test', uid: 'C7fDPD1AkHYZ8dTVKjKX43aiZRe2'}, {params: { resourceId: 'czLMiwiivde2NDWEQECP' }})
-// exports.orderResources = functions.firestore
-//   .document('resources/{resourceId}')
-//   .onCreate((snap, context) => {
-//     const data = snap.data();
-//     const documentId = context.params.resourceId;
-//     const documentRef = admin.firestore().collection('resources').doc(documentId);
-
-//     return admin.firestore()
-//       .collection('resources')
-//       .where('uid', '==', data.uid)
-//       .get()
-//       .then(querySnapshot => {
-//         return documentRef.update({order: parseInt(querySnapshot.size - 1)});
-//       })
-//       .catch(error => {
-//         console.error(error);
-//       });
-//   });
+// TODO delete collections if user is removed
