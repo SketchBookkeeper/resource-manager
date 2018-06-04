@@ -75,7 +75,6 @@ export default {
     }
 
     &.is-dragging {
-      background-color: aquamarine;
       z-index: 300;
       cursor: grabbing;
     }
