@@ -45,7 +45,8 @@ export default {
   },
   props: [
     'collectionId',
-    'collectionName'
+    'collectionName',
+    'collectionsLength'
   ],
   data () {
     return {
@@ -90,6 +91,15 @@ export default {
         })
     },
     deleteCollection () {
+      if (this.collectionsLength === 1) {
+        this.eventHub.$emit('notification', {
+          message: 'You need at least one collection.',
+          type: 'is-warning'
+        })
+
+        return
+      }
+
       if (this.name !== this.confirmDelete) {
         this.eventHub.$emit('notification', {
           message: 'Name does not match',

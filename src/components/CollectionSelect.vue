@@ -9,7 +9,7 @@
         </div>
 
         <div class="column is-1">
-          <EditCollection :collection-name="collection.name" :collection-id="collection.id" />
+          <EditCollection :collection-name="collection.name" :collection-id="collection.id" :collections-length="collections.length" />
         </div>
       </div>
     </DropdownItem>
@@ -29,16 +29,16 @@ import AddCollection from '@/components/AddCollection'
 import EditCollection from '@/components/EditCollection'
 export default {
   name: 'collection-select',
-  props: [
-    'collections',
-    'userId'
-  ],
   components: {
     Dropdown,
     DropdownItem,
     AddCollection,
     EditCollection
   },
+  props: [
+    'collections',
+    'userId'
+  ],
   data () {
     return {
       selectedCollection: ''

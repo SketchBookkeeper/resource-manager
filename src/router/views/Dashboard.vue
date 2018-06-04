@@ -28,7 +28,7 @@ export default {
     return {
       collections: [],
       activeCollection: {
-        id: 0
+        id: null
       }
     }
   },
@@ -52,7 +52,10 @@ export default {
             this.collections.push(collectionItem)
           })
 
-        this.activeCollection = this.collections[0]
+        // Set first collection as active if user has at least one collection
+        if (this.collections.length > 0) {
+          this.activeCollection = this.collections[0]
+        }
       })
 
     this.eventHub.$on('collectionChange', event => {
