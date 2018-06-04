@@ -1,5 +1,5 @@
 <template>
-  <Dropdown title="Collections" icon="folder_open">
+  <Dropdown class="collection-select" title="Collections" icon="folder_open">
     <DropdownItem v-for="collection in collections" :key="collection.id" >
       <div class="columns">
         <div class="column is-8">
@@ -51,3 +51,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .collection-select {
+    .dropdown-menu {
+      min-width: 15rem;
+    }
+  }
+</style>
