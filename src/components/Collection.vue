@@ -21,7 +21,7 @@ import Draggabilly from 'draggabilly'
 import Tile from './Tile'
 // Some packery functions need to take place after a tranistion
 // Times are set here for ease
-const transitionDuration = 0
+const transitionDuration = 300
 const transitionWaitTime = transitionDuration + 100
 export default {
   name: 'collection',

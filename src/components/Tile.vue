@@ -79,6 +79,18 @@ export default {
       cursor: grabbing;
     }
   }
+
+  .tile-animation-enter-active {
+    transition: opacity 400ms 400ms;
+  }
+
+  .tile-animation-enter {
+    opacity: 0;
+  }
+
+  .tile-animation-enter-to {
+    opacity: 1;
+  }
 </style>
 
 <style lang="scss">
