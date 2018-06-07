@@ -24,6 +24,7 @@
 <script>
 import db from './../firebaseinit'
 import Modal from './Modal'
+import randomColor from 'randomcolor'
 export default {
   components: {
     Modal
@@ -63,7 +64,8 @@ export default {
 
       db.collection('collections').add({
         name: this.name,
-        uid: this.userId
+        uid: this.userId,
+        color: randomColor({luminosity: 'light'})
       })
         .then(docRef => {
           this.eventHub.$emit('notification', {

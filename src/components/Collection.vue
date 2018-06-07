@@ -134,9 +134,6 @@ export default {
             .update({
               'order': index
             })
-            .then(() => {
-              console.log('Updated', item.id)
-            })
             .catch(error => {
               console.log(error)
             })
