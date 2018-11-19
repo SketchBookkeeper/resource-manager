@@ -5,6 +5,8 @@
 An app for managing links and notes.
 Made with Vue and Firebase
 
+[Try it out](https://resource-manager-f661c.firebaseapp.com/#/)
+
 ## Build Setup
 
 ``` bash
